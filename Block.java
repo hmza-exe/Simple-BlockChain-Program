@@ -1,4 +1,5 @@
 import java.util.Date;
+import Utility;
 
 /**
  * The Block class represents a block in a blockchain.
@@ -38,5 +39,26 @@ public class Block {
     this.data = data;
     this.previousHash = previousHash;
     this.timeStamp = new Date().getTime();
+
+    /**
+     * It is important to perform this operation last.
+     * The values of previousHash, timeStamp, and data
+     * must be set first because the hash function
+     * requires these values to calculate the hash.
+     */
+    this.hash = calculateHash();
   }
+
+  /**
+   * Calculates the hash of the block by applying the SHA-256 hash function
+   * to the concatenation of the previous block's hash, the current timestamp, 
+   * and the block's data.
+   *
+   * @return The calculated hash as a hexadecimal string.
+   */
+  public String calculateHash() {
+    String calculatedHash = Utility.applySHA256(previousHash + Long.toString(timeStamp) + data);
+    return calculatedHash;
+  }
+
 }
