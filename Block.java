@@ -1,5 +1,4 @@
 import java.util.Date;
-import Utility;
 
 /**
  * The Block class represents a block in a blockchain.
