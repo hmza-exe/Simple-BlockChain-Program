@@ -30,4 +30,35 @@ public class BasicChain {
 
     }
 
+    /**
+     * Validates the blockchain by ensuring that each block's hash is correctly calculated
+     * and matches the stored hash, and that each block's previous hash matches the hash
+     * of the preceding block.
+     *
+     * @return true if the blockchain is valid, false otherwise.
+     */
+    public static Boolean isChainValid() {
+        Block currentBlock;
+        Block previousBlock;
+
+        for (int i = 1; i < blockchain.size(); i++) {
+            currentBlock = blockchain.get(i);
+            previousBlock = blockchain.get(i - 1);
+
+            // Checks if the current block's hash is correct
+            if (!currentBlock.hash.equals(currentBlock.calculateHash())) {
+                System.out.println("Current Hashes are not equal!");
+                return false;
+            }
+
+            // Checks if the previous block's hash matches the current block's previous hash
+            if (!previousBlock.hash.equals(currentBlock.previousHash)) {
+                System.out.println("Previous Hashes are not equal!");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
