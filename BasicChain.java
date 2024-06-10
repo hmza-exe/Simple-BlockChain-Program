@@ -9,6 +9,8 @@ public class BasicChain {
 
     // An arraylisyt to store the blockchain. Every element is a block
     public static ArrayList<Block> blockchain = new ArrayList<Block>();
+
+    public static int difficulty = 5;
     
     /**
      * The main method is the entry point of the application.
@@ -19,13 +21,24 @@ public class BasicChain {
         
         // Add the genesis block to the blockchain.
         blockchain.add(new Block("This is the genesis block!", "0"));
+        System.out.println("Trying to Mine the genesis block...");
+        blockchain.get(0).mineBlock(difficulty);
+
         // Add the second block to the blockchain.
         blockchain.add(new Block("This is the second block!", blockchain.get(blockchain.size() - 1).hash));
+        System.out.println("Trying to Mine the second block...");
+        blockchain.get(1).mineBlock(difficulty);
+
         // Add the third block to the blockchain.
         blockchain.add(new Block("This is the third block!", blockchain.get(blockchain.size() - 1).hash));
+        System.out.println("Trying to Mine the third block...");
+        blockchain.get(2).mineBlock(difficulty);
+
+        System.out.println("\nBlockChain is valid: " + isChainValid());
 
         // Convert the blockchain into Pretty-printed JSON format and print it.
         String blockchainJSON = new GsonBuilder().setPrettyPrinting().create().toJson(blockchain);
+        System.out.println("\n The BlockChain: ");
         System.out.println(blockchainJSON);
 
     }
