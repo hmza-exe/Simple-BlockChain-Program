@@ -27,6 +27,8 @@ public class Block {
   */
   private long timeStamp;
 
+  private int num;
+
   /**
    * Constructs a new Block with the specified data and previous hash.
    * The current timestamp is recorded at the time of block creation.
@@ -56,8 +58,19 @@ public class Block {
    * @return The calculated hash as a hexadecimal string.
    */
   public String calculateHash() {
-    String calculatedHash = Utility.applySHA256(previousHash + Long.toString(timeStamp) + data);
+    String calculatedHash = Utility.applySHA256(previousHash + Long.toString(timeStamp) + Integer.toString(num) + data);
     return calculatedHash;
+  }
+
+  public void mineBlock(int difficulty) {
+    String target = new String(new char[difficulty]).replace("\0", "0");
+
+    while (!hash.substring(0, difficulty).equals(target)) {
+      num++;
+      hash = calculateHash();
+    }
+    
+    System.out.println("Block Mined!!! : " + hash);
   }
 
 }
